@@ -7,6 +7,7 @@ metadata:
     app: zhihu-spider
 spec:
   schedule: "0 1-23/2 * * *"
+  successfulJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
