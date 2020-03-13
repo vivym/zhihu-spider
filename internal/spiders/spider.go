@@ -1,6 +1,7 @@
 package spiders
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
 	"math/rand"
@@ -27,7 +28,8 @@ func New(config Config, nlpToolkit *nlp.NLPToolkit) *Spider {
 		SetRetryWaitTime(5*time.Second).
 		SetRetryMaxWaitTime(20*time.Second).
 		SetHostURL(baseURL).
-		SetHeader("User-Agent", userAgent)
+		SetHeader("User-Agent", userAgent).
+		SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 
 	return &Spider{
 		config: &config,
