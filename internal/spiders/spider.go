@@ -46,10 +46,13 @@ func (s *Spider) Go() error {
 	var zhihuHotTopics model.ZhihuHotTopics
 	var sentences []string
 	for i, hotTopic := range hotTopicList.Data {
-		fmt.Println("topic:", hotTopic.Target.Title)
 		if i >= s.config.MaxTopics {
 			break
 		}
+		fmt.Println("topic:", hotTopic.Target.Title)
+		delay := time.Duration(s.config.Delay + rand.Intn(300))
+		time.Sleep(delay * time.Millisecond)
+
 		answers, err := s.fetchAnswersAll(hotTopic.Target.ID)
 		if err != nil {
 			if len(answers) == 0 {
@@ -87,9 +90,6 @@ func (s *Spider) Go() error {
 		zhihuTopic.Keywords = keywords
 
 		zhihuHotTopics.Topics = append(zhihuHotTopics.Topics, zhihuTopic)
-
-		delay := time.Duration(s.config.Delay + rand.Intn(300))
-		time.Sleep(delay * time.Millisecond)
 	}
 
 	sentence := strings.Join(sentences, "\n")
