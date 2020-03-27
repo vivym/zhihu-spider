@@ -45,7 +45,9 @@ func (s *Spider) Go() error {
 	}
 	fmt.Println("hotTopicList done.")
 
-	var zhihuHotTopics model.ZhihuHotTopics
+	zhihuHotTopics := model.ZhihuHotTopics{
+		Time: int32(time.Now().Unix()),
+	}
 	var sentences []string
 	for i, hotTopic := range hotTopicList.Data {
 		if i >= s.config.MaxTopics {
